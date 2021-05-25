@@ -9,6 +9,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     table = ui->downloadView;
 
+    Py_Initialize();
+    if(!Py_IsInitialized())
+    {
+        qDebug() << "Qt initialized faild";
+        return;
+    }
+
     table->setColumnCount(2);
     QStringList header;
     header << QString::fromLocal8Bit("任务名") << QString::fromLocal8Bit("下载进度");
@@ -31,21 +38,31 @@ MainWindow::MainWindow(QWidget *parent)
     // 新任务
     QObject::connect(ui->newButton,&QPushButton::clicked,[&](){
         newDlg = new NewDialog();
-        newDlg->exec();
         QObject::connect(newDlg,&NewDialog::setMission,this,&MainWindow::startMission);
+        newDlg->exec();
+
     });
 
     //转码
     QObject::connect(ui->convertButton,&QPushButton::clicked,[&](){
         convertDlg = new ConvertDialog();
+        QObject::connect(convertDlg,&ConvertDialog::startConvert,this,&MainWindow::convertMedia);
         convertDlg->exec();
+
     });
 }
 
 MainWindow::~MainWindow()
 {
+    Py_Finalize();
     delete ui;
 }
+
+/*
+* you-get -o dir url
+* youtube-dl -o dirTemplate url
+*/
+
 
 void MainWindow::startMission(QString url,QString filePath)
 {
@@ -53,12 +70,21 @@ void MainWindow::startMission(QString url,QString filePath)
     delete newDlg;
     //QTableWidgetItem *download = new QTableWidgetItem();
     //download->set
+
+    PyRun_SimpleString("import you_get");
+    PyRun_SimpleString("import youtube_dl");
+
+
+
+
+
     qDebug() << url << ", " << filePath;
 }
 
-void MainWindow::convertMedia()
+void MainWindow::convertMedia(QString command)
 {
-
+    //QProcess *work = new QProcess();
+    //work->start("ffmpeg");
 }
 
 

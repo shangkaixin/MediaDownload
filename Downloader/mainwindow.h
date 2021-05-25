@@ -10,6 +10,8 @@
 #include "aboutdialog.h"
 #include "convertdialog.h"
 
+#include <Python.h>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -24,7 +26,7 @@ public:
 
 public slots:
     void startMission(QString url,QString filePath);
-    void convertMedia();
+    void convertMedia(QString command);
 
 private:
     Ui::MainWindow *ui;

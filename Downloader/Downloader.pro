@@ -11,9 +11,8 @@ CONFIG += c++11
 INCLUDEPATH += C:\Python\Python38\include \
 
 
-LIBS += C:\Python\Python38\libs\python38.lib \
-
-
+LIBS += C:\Python\Python38\libs\python3.lib \
+        C:\Python\Python38\libs\python38.lib \
 
 SOURCES += \
     aboutdialog.cpp \

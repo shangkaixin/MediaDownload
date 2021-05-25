@@ -8,10 +8,10 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->setupUi(this);
 
     ui->iconLabel->setPixmap(QPixmap(":/icon/icon/about.png").scaled(60,60,Qt::KeepAspectRatio));
-    ui->infoLabel->setText(QString::fromLocal8Bit("软件基于Qt5开发，并封装下载器\r\n"
+    ui->infoLabel->setText(QString::fromLocal8Bit("软件基于Qt5, Python开发\r\n"
                                                   "所使用到的插件:\r\n"
                                                   "youtube-dl\r\n"
-                                                  "python 3.8\r\n"
+                                                  "you-get\r\n"
                                                   "ffmpeg\r\n"
                                                   "aria2\r\n"
                                                   "ThunderX\r\n"
