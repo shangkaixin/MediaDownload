@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>icon/about.png</file>
+        <file>icon/delete.png</file>
+        <file>icon/download.png</file>
+        <file>icon/edit-media.png</file>
+        <file>icon/exit (1).png</file>
+        <file>icon/Stop (Filled).png</file>
+        <file>icon/convert.png</file>
+    </qresource>
+</RCC>
