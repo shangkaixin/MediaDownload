@@ -4,6 +4,12 @@
 #include <QDialog>
 #include <QFileDialog>
 #include <QTextBrowser>
+#include <QMessageBox>
+
+enum Method{
+  Media = 0,
+  File
+};
 
 namespace Ui {
 class NewDialog;
@@ -13,7 +19,7 @@ class NewDialog : public QDialog
 {
     Q_OBJECT
 signals:
-    void setMission(QString url,QString path);
+    void setMission(Method method,QString url,QString path);
 
 public:
     explicit NewDialog(QWidget *parent = nullptr);
@@ -21,7 +27,6 @@ public:
 
 private:
     Ui::NewDialog *ui;
-    QTextBrowser *log;
     QString url;
     QString filePath;
 };

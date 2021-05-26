@@ -9,13 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     table = ui->downloadView;
 
-    Py_Initialize();
-    if(!Py_IsInitialized())
-    {
-        qDebug() << "Qt initialized faild";
-        return;
-    }
-
     table->setColumnCount(2);
     QStringList header;
     header << QString::fromLocal8Bit("任务名") << QString::fromLocal8Bit("下载进度");
@@ -23,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     table->setColumnWidth(0,200);
     table->setColumnWidth(1,400);
 
+    // 检测是否为第一次使用，并搭建环境
 
 
 
@@ -54,7 +48,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    Py_Finalize();
     delete ui;
 }
 
@@ -68,27 +61,75 @@ MainWindow::~MainWindow()
 */
 
 
-void MainWindow::startMission(QString url,QString filePath)
+void MainWindow::startMission(Method method,QString url,QString filePath)
 {
+    // 新增任务表
     newDlg->hide();
     delete newDlg;
-    //QTableWidgetItem *download = new QTableWidgetItem();
-    //download->set
+    QTableWidgetItem *name = new QTableWidgetItem();
+    name->setText(url);
+    QTableWidgetItem *progress = new QTableWidgetItem();
+    progress->setText(QString::fromLocal8Bit("连接中..."));
+    table->insertRow(0);
+    int index = table->rowCount();
+    table->setItem(index-1,0,name);
+    table->setItem(index-1,1,progress);
+    QApplication::processEvents();
 
-    PyRun_SimpleString("import you_get");
-    PyRun_SimpleString("import youtube_dl");
+    // 开始任务
+    QString command("cmd");
+    QString args;
+    QString currentPath = QApplication::applicationDirPath();
+    if(method == Media)
+    {
+        args =" /c ";
+        args += "D:\\workspace\\Download_Play";
+        args += "\\youtube-dl\\youtube-dl.exe";
+    }
+    else if(method == File)
+    {
 
+        args = " /c " + currentPath + "\\aira2\\aira2c.exe";
+    }
 
+    args += " -o ";
+    args += filePath + " ";
+    args += url;
 
+    QProcess work;
+    QObject::connect(&work,&QProcess::readyReadStandardOutput,[&](){
+        QApplication::processEvents();
+        //QTableWidgetItem *progress = new QTableWidgetItem();
+        progress->setText(work.readAllStandardOutput());
+        //table->setItem(index-1,1,progress);
+    });
+    work.setReadChannel(QProcess::StandardOutput);
+    work.start(command,QStringList(args));
+    work.waitForFinished(-1);
 
-
-    qDebug() << url << ", " << filePath;
 }
 
 void MainWindow::convertMedia(QString command)
 {
+    /*
+    // 新增任务表
+    newDlg->hide();
+    delete newDlg;
+    QTableWidgetItem *name = new QTableWidgetItem();
+    name->setText(url);
+    QTableWidgetItem *progress = new QTableWidgetItem();
+    progress->setText("连接中...");
+    table->insertColumn(1);
+    int index = table->columnCount();
+    table->setItem(0,index-1,name);
+    table->setItem(1,index-1,progress);
+
+    QString currentPath = QApplication::applicationDirPath();
+    args = " /c " + currentPath + "\\aira2\\aira2c.exe";
+
     //QProcess *work = new QProcess();
     //work->start("ffmpeg");
+    */
 }
 
 

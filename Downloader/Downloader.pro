@@ -8,12 +8,6 @@ CONFIG += c++11
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-INCLUDEPATH += C:\Python\Python38\include \
-
-
-LIBS += C:\Python\Python38\libs\python3.lib \
-        C:\Python\Python38\libs\python38.lib \
-
 SOURCES += \
     aboutdialog.cpp \
     convertdialog.cpp \
