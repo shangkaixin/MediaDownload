@@ -60,7 +60,11 @@ MainWindow::~MainWindow()
 
 /*
 * you-get -o dir url
+*
+*
 * youtube-dl -o dirTemplate url
+* [download] Destination: ??ACICFG?????к??S21E04 -??????610?????(1080P ????????-1hA411L7dM.flv
+* "\r[download]  57.0% of 561.64MiB at  7.08MiB/s ETA 00:34         "
 */
 
 
